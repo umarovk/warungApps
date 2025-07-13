@@ -104,8 +104,6 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'customer_name' => 'required|string|max:255',
-            'table_number' => 'nullable|integer|min:1',
             'items' => 'required|json',
             'total' => 'required|numeric|min:0'
         ]);
@@ -132,8 +130,8 @@ class OrderController extends Controller
         try {
             // Create order
             $order = Order::create([
-                'customer_name' => $request->customer_name,
-                'table_number' => $request->table_number,
+                'customer_name' => 'Pelanggan',
+                'table_number' => 1,
                 'total' => $request->total,
                 'status' => Order::STATUS_PENDING
             ]);

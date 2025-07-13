@@ -341,6 +341,54 @@
             padding: 20px;
         }
 
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .success-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .success-icon {
+            background: #4CAF50;
+            color: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            0% {
+                transform: scale(0);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
         @media (max-width: 480px) {
             .menu-image {
                 width: 40px;
@@ -365,12 +413,12 @@
             href="{{ route('dashboard') }}"
             class="back-btn"
         >←</a>
-       
+
         <h1>Tambah Order</h1>
         <p>Pilih menu untuk order baru</p>
     </div>
 
- 
+
 
     <div class="container">
 
@@ -448,38 +496,7 @@
         @endforeach
 
 
-        <div class="form-card">
-            <div class="form-group">
-                <label
-                    for="customer_name"
-                    class="form-label"
-                >Nama Pelanggan *</label>
-                <input
-                    type="text"
-                    id="customer_name"
-                    name="customer_name"
-                    value="Nama Pelanggan"
-                    class="form-input"
-                    required
-                >
-            </div>
 
-            <div class="form-group">
-                <label
-                    for="table_number"
-                    class="form-label"
-                >Nomor Meja</label>
-                <input
-                    type="number"
-                    id="table_number"
-                    name="table_number"
-                    class="form-input"
-                    value="1"
-                    min="1"
-                    placeholder="Opsional"
-                >
-            </div>
-        </div>
 
     </div>
 
@@ -513,6 +530,16 @@
         >
             Buat Order
         </button>
+    </div>
+
+    <!-- Success Overlay -->
+    <div
+        class="success-overlay"
+        id="successOverlay"
+    >
+        <div class="success-icon">
+            ✓
+        </div>
     </div>
 
     <script>
@@ -603,14 +630,6 @@
         }
 
         function submitOrder() {
-            const customerName = document.getElementById('customer_name').value.trim();
-            const tableNumber = document.getElementById('table_number').value;
-
-            if (!customerName) {
-                alert('Nama pelanggan harus diisi!');
-                return;
-            }
-
             if (Object.keys(orderItems).length === 0) {
                 alert('Pilih minimal satu menu!');
                 return;
@@ -618,8 +637,6 @@
 
             // Create form data
             const formData = new FormData();
-            formData.append('customer_name', customerName);
-            formData.append('table_number', tableNumber);
             formData.append('items', JSON.stringify(orderItems));
             formData.append('total', Object.values(orderItems).reduce((sum, item) => sum + item.total, 0));
             formData.append('_token', '{{ csrf_token() }}');
@@ -632,8 +649,14 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert('Order berhasil dibuat!');
-                        window.location.href = '{{ route('dashboard') }}';
+                        // Show success overlay
+                        const overlay = document.getElementById('successOverlay');
+                        overlay.classList.add('show');
+
+                        // Redirect to dashboard after 0.5 seconds
+                        setTimeout(() => {
+                            window.location.href = '{{ route('dashboard') }}';
+                        }, 500);
                     } else {
                         alert('Gagal membuat order: ' + data.message);
                     }

@@ -193,11 +193,7 @@
             margin-top: 20px;
         }
 
-        .top-menu-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
+
 
         .top-menu-card {
             background: rgba(255, 255, 255, 0.1);
@@ -298,10 +294,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .top-menu-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
+
         }
 
         .button-container {
@@ -422,63 +415,64 @@
             </div>
         </div>
 
+        <!-- Top Food Items -->
         <div class="top-menu-section">
-            <div class="top-menu-grid">
-                <!-- Top Food Items -->
-                <div class="top-menu-card">
-                    <div class="top-menu-title">
-                        <span>🍽️ Makanan Terlaris</span>
-                    </div>
-                    <div class="top-menu-list">
-                        @if ($topFoodItems->isEmpty())
-                            <div class="no-data">Belum ada data</div>
-                        @else
-                            @foreach ($topFoodItems as $index => $item)
-                                <div class="top-menu-item">
-                                    <div class="menu-rank rank-{{ $index + 1 }}">
-                                        {{ $index + 1 }}
-                                    </div>
-                                    <div class="menu-info">
-                                        <div class="menu-name">{{ $item->nama }}</div>
-                                        <div class="menu-stats">
-                                            Terjual: {{ $item->total_sold }} | Rp
-                                            {{ number_format($item->total_revenue, 0, ',', '.') }}
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @endif
-                    </div>
+            <div class="top-menu-card">
+                <div class="top-menu-title">
+                    <span>🍽️ Makanan Terlaris</span>
                 </div>
-
-                <!-- Top Drink Items -->
-                <div class="top-menu-card">
-                    <div class="top-menu-title">
-                        <span>🥤 Minuman Terlaris</span>
-                    </div>
-                    <div class="top-menu-list">
-                        @if ($topDrinkItems->isEmpty())
-                            <div class="no-data">Belum ada data</div>
-                        @else
-                            @foreach ($topDrinkItems as $index => $item)
-                                <div class="top-menu-item">
-                                    <div class="menu-rank rank-{{ $index + 1 }}">
-                                        {{ $index + 1 }}
-                                    </div>
-                                    <div class="menu-info">
-                                        <div class="menu-name">{{ $item->nama }}</div>
-                                        <div class="menu-stats">
-                                            Terjual: {{ $item->total_sold }} | Rp
-                                            {{ number_format($item->total_revenue, 0, ',', '.') }}
-                                        </div>
+                <div class="top-menu-list">
+                    @if ($topFoodItems->isEmpty())
+                        <div class="no-data">Belum ada data</div>
+                    @else
+                        @foreach ($topFoodItems as $index => $item)
+                            <div class="top-menu-item">
+                                <div class="menu-rank rank-{{ $index + 1 }}">
+                                    {{ $index + 1 }}
+                                </div>
+                                <div class="menu-info">
+                                    <div class="menu-name">{{ $item->nama }}</div>
+                                    <div class="menu-stats">
+                                        Terjual: {{ $item->total_sold }} | Rp
+                                        {{ number_format($item->total_revenue, 0, ',', '.') }}
                                     </div>
                                 </div>
-                            @endforeach
-                        @endif
-                    </div>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
+
+        <!-- Top Drink Items -->
+        <div class="top-menu-section">
+            <div class="top-menu-card">
+                <div class="top-menu-title">
+                    <span>🥤 Minuman Terlaris</span>
+                </div>
+                <div class="top-menu-list">
+                    @if ($topDrinkItems->isEmpty())
+                        <div class="no-data">Belum ada data</div>
+                    @else
+                        @foreach ($topDrinkItems as $index => $item)
+                            <div class="top-menu-item">
+                                <div class="menu-rank rank-{{ $index + 1 }}">
+                                    {{ $index + 1 }}
+                                </div>
+                                <div class="menu-info">
+                                    <div class="menu-name">{{ $item->nama }}</div>
+                                    <div class="menu-stats">
+                                        Terjual: {{ $item->total_sold }} | Rp
+                                        {{ number_format($item->total_revenue, 0, ',', '.') }}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="button-container">

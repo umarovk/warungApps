@@ -239,9 +239,9 @@
         <div class="divider">atau</div>
 
         <div class="demo-info">
-            <strong>Demo Account:</strong><br>
-            Username: admin<br>
-            Password: password123
+            <strong>Clue Account:</strong><br>
+            Username: w...<br>
+            Password: b...
         </div>
     </div>
 </body>
