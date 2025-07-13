@@ -10,7 +10,7 @@ class MenuController extends Controller
 {
     public function index()
     {
-        $menus = Menu::all();
+        $menus = Menu::ordered()->get();
         return view('menus.index', compact('menus'));
     }
 
@@ -45,7 +45,8 @@ class MenuController extends Controller
             'deskripsi' => $request->deskripsi,
             'kategori' => $request->kategori,
             'gambar' => $gambarPath,
-            'status' => true
+            'status' => true,
+            'urutan' => $request->urutan ?? Menu::max('urutan') + 1
         ]);
 
         return redirect()->route('menus.index')->with('success', 'Menu berhasil ditambahkan!');
@@ -91,7 +92,8 @@ class MenuController extends Controller
             'deskripsi' => $request->deskripsi,
             'kategori' => $request->kategori,
             'gambar' => $gambarPath,
-            'status' => $request->has('status')
+            'status' => $request->has('status'),
+            'urutan' => $request->urutan ?? $menu->urutan
         ]);
 
         return redirect()->route('menus.index')->with('success', 'Menu berhasil diperbarui!');

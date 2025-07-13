@@ -17,10 +17,9 @@ class OrderController extends Controller
 
     public function create()
     {
-        // Get all active menus grouped by category
+        // Get all active menus grouped by category, ordered by urutan
         $categories = Menu::active()
-            ->orderBy('kategori')
-            ->orderBy('nama')
+            ->ordered()
             ->get()
             ->groupBy('kategori');
         

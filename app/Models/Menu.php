@@ -15,12 +15,14 @@ class Menu extends Model
         'harga',
         'deskripsi',
         'kategori',
-        'status'
+        'status',
+        'urutan'
     ];
 
     protected $casts = [
         'harga' => 'integer',
-        'status' => 'boolean'
+        'status' => 'boolean',
+        'urutan' => 'integer'
     ];
 
     // Constants for categories
@@ -52,6 +54,12 @@ class Menu extends Model
     public function scopeMinuman($query)
     {
         return $query->where('kategori', self::KATEGORI_MINUMAN);
+    }
+
+    // Scope for ordering by urutan
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('urutan', 'asc');
     }
 
     // Format price with Indonesian currency

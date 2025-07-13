@@ -281,6 +281,26 @@
 
                 <div class="form-group">
                     <label
+                        for="urutan"
+                        class="form-label"
+                    >Urutan *</label>
+                    <input
+                        type="number"
+                        id="urutan"
+                        name="urutan"
+                        class="form-input"
+                        value="{{ old('urutan', $menu->urutan) }}"
+                        min="1"
+                        required
+                    >
+                    <small style="color: #666; font-size: 12px;">Urutan untuk menampilkan menu (1 = pertama)</small>
+                    @error('urutan')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label
                         for="deskripsi"
                         class="form-label"
                     >Deskripsi</label>
