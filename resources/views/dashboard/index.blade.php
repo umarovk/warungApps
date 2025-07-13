@@ -163,6 +163,100 @@
             font-weight: 500;
         }
 
+        .top-menu-section {
+            margin-top: 20px;
+        }
+
+        .top-menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .top-menu-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .top-menu-title {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .top-menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .top-menu-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-rank {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .menu-rank.rank-2 {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+        }
+
+        .menu-rank.rank-3 {
+            background: linear-gradient(135deg, #45b7d1, #96c93d);
+        }
+
+        .menu-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .menu-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .menu-stats {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .no-data {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            padding: 20px;
+        }
+
         @media (max-width: 360px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
@@ -177,6 +271,11 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
+
+            .top-menu-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
         }
     </style>
 </head>
@@ -184,8 +283,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Warung Dashboard</h1>
-            <p>Kelola warung Anda dengan mudah</p>
+            <h1>Warung Bu Saemah</h1>
+            <p>Warung Bakso Nomor 1 di Banjarnegara</p>
         </div>
 
         <div class="dashboard-grid">
@@ -211,7 +310,8 @@
                 <div class="feature-desc">Tambah menu baru</div>
             </a>
 
-            <a
+            {{-- fitur user dan pengaturan --}}
+            {{-- <a
                 href="{{ route('users.index') }}"
                 class="feature-card"
             >
@@ -231,7 +331,7 @@
                 </div>
                 <div class="feature-title">Pengaturan</div>
                 <div class="feature-desc">Konfigurasi aplikasi</div>
-            </a>
+            </a> --}}
         </div>
 
         <div class="stats-section">
@@ -252,6 +352,64 @@
                 <div class="stat-item">
                     <div class="stat-number">{{ $userCount }}</div>
                     <div class="stat-label">User Aktif</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="top-menu-section">
+            <div class="top-menu-grid">
+                <!-- Top Food Items -->
+                <div class="top-menu-card">
+                    <div class="top-menu-title">
+                        <span>🍽️ Makanan Terlaris</span>
+                    </div>
+                    <div class="top-menu-list">
+                        @if ($topFoodItems->isEmpty())
+                            <div class="no-data">Belum ada data</div>
+                        @else
+                            @foreach ($topFoodItems as $index => $item)
+                                <div class="top-menu-item">
+                                    <div class="menu-rank rank-{{ $index + 1 }}">
+                                        {{ $index + 1 }}
+                                    </div>
+                                    <div class="menu-info">
+                                        <div class="menu-name">{{ $item->nama }}</div>
+                                        <div class="menu-stats">
+                                            Terjual: {{ $item->total_sold }} | Rp
+                                            {{ number_format($item->total_revenue, 0, ',', '.') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Top Drink Items -->
+                <div class="top-menu-card">
+                    <div class="top-menu-title">
+                        <span>🥤 Minuman Terlaris</span>
+                    </div>
+                    <div class="top-menu-list">
+                        @if ($topDrinkItems->isEmpty())
+                            <div class="no-data">Belum ada data</div>
+                        @else
+                            @foreach ($topDrinkItems as $index => $item)
+                                <div class="top-menu-item">
+                                    <div class="menu-rank rank-{{ $index + 1 }}">
+                                        {{ $index + 1 }}
+                                    </div>
+                                    <div class="menu-info">
+                                        <div class="menu-name">{{ $item->nama }}</div>
+                                        <div class="menu-stats">
+                                            Terjual: {{ $item->total_sold }} | Rp
+                                            {{ number_format($item->total_revenue, 0, ',', '.') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

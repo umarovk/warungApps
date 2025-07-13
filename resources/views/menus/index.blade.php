@@ -51,20 +51,38 @@
             max-width: 400px;
             margin: 0 auto;
             padding: 20px;
+            padding-bottom: 100px;
         }
 
         .add-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
             background: linear-gradient(135deg, #4ecdc4, #44a08d);
             color: white;
             border: none;
-            padding: 15px 25px;
-            border-radius: 25px;
+            padding: 18px 35px;
+            border-radius: 50px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            width: 100%;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .add-btn:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 12px 35px rgba(78, 205, 196, 0.5);
+        }
+
+        .add-btn:active {
+            transform: translateX(-50%) translateY(0);
         }
 
         .menu-grid {
@@ -257,13 +275,6 @@
             </div>
         @endif
 
-        <a
-            href="{{ route('menus.create') }}"
-            class="add-btn"
-        >
-            + Tambah Menu Baru
-        </a>
-
         <div class="menu-grid">
             @if (isset($menus) && count($menus) > 0)
                 @foreach ($menus as $menu)
@@ -319,6 +330,13 @@
                 </div>
             @endif
         </div>
+
+        <a
+            href="{{ route('menus.create') }}"
+            class="add-btn"
+        >
+            + Tambah Menu Baru
+        </a>
     </div>
 
     <script>

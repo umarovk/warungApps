@@ -351,38 +351,7 @@
     </div>
 
     <div class="container">
-        <div class="form-card">
-            <div class="form-group">
-                <label
-                    for="customer_name"
-                    class="form-label"
-                >Nama Pelanggan *</label>
-                <input
-                    type="text"
-                    id="customer_name"
-                    name="customer_name"
-                    value="Nama Pelanggan"
-                    class="form-input"
-                    required
-                >
-            </div>
 
-            <div class="form-group">
-                <label
-                    for="table_number"
-                    class="form-label"
-                >Nomor Meja</label>
-                <input
-                    type="number"
-                    id="table_number"
-                    name="table_number"
-                    class="form-input"
-                    value="1"
-                    min="1"
-                    placeholder="Opsional"
-                >
-            </div>
-        </div>
 
         <!-- Menu Sections -->
         @foreach ($categories as $category => $menus)
@@ -455,6 +424,41 @@
                 </div>
             </div>
         @endforeach
+
+
+        <div class="form-card">
+            <div class="form-group">
+                <label
+                    for="customer_name"
+                    class="form-label"
+                >Nama Pelanggan *</label>
+                <input
+                    type="text"
+                    id="customer_name"
+                    name="customer_name"
+                    value="Nama Pelanggan"
+                    class="form-input"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label
+                    for="table_number"
+                    class="form-label"
+                >Nomor Meja</label>
+                <input
+                    type="number"
+                    id="table_number"
+                    name="table_number"
+                    class="form-input"
+                    value="1"
+                    min="1"
+                    placeholder="Opsional"
+                >
+            </div>
+        </div>
+
     </div>
 
     <!-- Order Summary -->
