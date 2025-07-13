@@ -32,6 +32,32 @@
             text-align: center;
             margin-bottom: 30px;
             color: white;
+            position: relative;
+        }
+
+        .logout-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px auto 0;
+        }
+
+        .logout-btn-bottom {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logout-btn-bottom:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
         }
 
         .header h1 {
@@ -277,6 +303,46 @@
                 gap: 15px;
             }
         }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px auto 0;
+        }
+
+        .export-btn,
+        .backup-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .export-btn:hover,
+        .backup-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 400px) {
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .export-btn,
+            .backup-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
     </style>
 </head>
 
@@ -414,6 +480,41 @@
             </div>
         </div>
     </div>
+
+    <div class="button-container">
+        <a
+            href="{{ route('orders.export.csv') }}"
+            class="export-btn"
+        >
+            📊 Export ke CSV
+        </a>
+        <a
+            href="{{ route('database.backup') }}"
+            class="backup-btn"
+        >
+            💾 Backup Database
+        </a>
+    </div>
+
+    <div class="logout-container">
+        <a
+            href="{{ route('logout') }}"
+            class="logout-btn-bottom"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+        >
+            🚪 Logout
+        </a>
+    </div>
+
+    <form
+        id="logout-form"
+        action="{{ route('logout') }}"
+        method="POST"
+        style="display: none;"
+    >
+        @csrf
+    </form>
+
 </body>
 
 </html>

@@ -27,6 +27,7 @@
             color: white;
             padding: 20px;
             text-align: center;
+            position: relative;
         }
 
         .header h1 {
@@ -38,15 +39,33 @@
         .back-btn {
             position: absolute;
             left: 20px;
-            top: 20px;
-            background: rgba(255, 255, 255, 0.2);
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
             border: none;
-            color: white;
-            padding: 10px;
-            border-radius: 50%;
+            color: #333;
+            padding: 10px 14px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            min-height: 40px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
+        .back-btn:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+
 
         .container {
             max-width: 400px;
@@ -346,9 +365,12 @@
             href="{{ route('dashboard') }}"
             class="back-btn"
         >←</a>
+       
         <h1>Tambah Order</h1>
         <p>Pilih menu untuk order baru</p>
     </div>
+
+ 
 
     <div class="container">
 

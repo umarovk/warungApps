@@ -51,6 +51,7 @@
             max-width: 400px;
             margin: 0 auto;
             padding: 20px;
+            padding-bottom: 100px;
         }
 
         .add-btn {
@@ -158,6 +159,8 @@
             font-weight: 500;
             border: 1px solid #c3e6cb;
         }
+
+        
     </style>
 </head>
 
@@ -172,12 +175,12 @@
     </div>
 
     <div class="container">
-        @if(session('success'))
+        @if (session('success'))
             <div class="success-message">
                 {{ session('success') }}
             </div>
         @endif
-        
+
         <a
             href="{{ route('orders.create') }}"
             class="add-btn"
@@ -192,16 +195,16 @@
                         <div class="order-info">
                             <h3>Order #{{ $order->id }}</h3>
                             <p>Pelanggan: {{ $order->customer_name }}</p>
-                            @if($order->table_number)
+                            @if ($order->table_number)
                                 <p>Meja: {{ $order->table_number }}</p>
                             @endif
                             <p>Total: {{ $order->formatted_total }}</p>
                             <p>Waktu: {{ $order->created_at->format('d/m/Y H:i') }}</p>
                             <div class="order-items-preview">
-                                @foreach($order->items->take(2) as $item)
+                                @foreach ($order->items->take(2) as $item)
                                     <small>{{ $item->quantity }}x {{ $item->menu->nama }}</small>
                                 @endforeach
-                                @if($order->items->count() > 2)
+                                @if ($order->items->count() > 2)
                                     <small>+{{ $order->items->count() - 2 }} item lainnya</small>
                                 @endif
                             </div>
@@ -218,6 +221,8 @@
                 </div>
             @endif
         </div>
+
+        
     </div>
 </body>
 
