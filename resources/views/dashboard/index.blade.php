@@ -190,7 +190,7 @@
 
         <div class="dashboard-grid">
             <a
-                href="{{ route('orders.index') }}"
+                href="{{ route('orders.create') }}"
                 class="feature-card"
             >
                 <div class="feature-icon order-icon">

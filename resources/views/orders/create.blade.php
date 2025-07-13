@@ -22,7 +22,8 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            /* background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); */
+            background: black;
             color: white;
             padding: 20px;
             text-align: center;
@@ -51,6 +52,7 @@
             max-width: 400px;
             margin: 0 auto;
             padding: 20px;
+            padding-bottom: 40px;
         }
 
         .form-card {
@@ -217,8 +219,10 @@
             border-radius: 15px;
             padding: 25px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            bottom: 20px;
+            margin-top: 20px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .summary-title {
@@ -339,7 +343,7 @@
 <body>
     <div class="header">
         <a
-            href="{{ route('orders.index') }}"
+            href="{{ route('dashboard') }}"
             class="back-btn"
         >←</a>
         <h1>Tambah Order</h1>
@@ -357,6 +361,7 @@
                     type="text"
                     id="customer_name"
                     name="customer_name"
+                    value="Nama Pelanggan"
                     class="form-input"
                     required
                 >
@@ -372,6 +377,7 @@
                     id="table_number"
                     name="table_number"
                     class="form-input"
+                    value="1"
                     min="1"
                     placeholder="Opsional"
                 >
@@ -449,38 +455,38 @@
                 </div>
             </div>
         @endforeach
+    </div>
 
-        <!-- Order Summary -->
-        <div class="order-summary">
-            <h3 class="summary-title">Ringkasan Order</h3>
+    <!-- Order Summary -->
+    <div class="order-summary">
+        <h3 class="summary-title">Ringkasan Order</h3>
 
-            <div
-                class="order-items"
-                id="orderItems"
-            >
-                <div class="empty-cart">Belum ada item yang dipilih</div>
-            </div>
-
-            <div class="total-section">
-                <div class="total-row">
-                    <span class="total-label">Total:</span>
-                    <span
-                        class="total-amount"
-                        id="totalAmount"
-                    >Rp 0</span>
-                </div>
-            </div>
-
-            <button
-                type="button"
-                class="submit-btn"
-                id="submitBtn"
-                onclick="submitOrder()"
-                disabled
-            >
-                Buat Order
-            </button>
+        <div
+            class="order-items"
+            id="orderItems"
+        >
+            <div class="empty-cart">Belum ada item yang dipilih</div>
         </div>
+
+        <div class="total-section">
+            <div class="total-row">
+                <span class="total-label">Total:</span>
+                <span
+                    class="total-amount"
+                    id="totalAmount"
+                >Rp 0</span>
+            </div>
+        </div>
+
+        <button
+            type="button"
+            class="submit-btn"
+            id="submitBtn"
+            onclick="submitOrder()"
+            disabled
+        >
+            Buat Order
+        </button>
     </div>
 
     <script>
@@ -601,7 +607,7 @@
                 .then(data => {
                     if (data.success) {
                         alert('Order berhasil dibuat!');
-                        window.location.href = '{{ route('orders.index') }}';
+                        window.location.href = '{{ route('dashboard') }}';
                     } else {
                         alert('Gagal membuat order: ' + data.message);
                     }
