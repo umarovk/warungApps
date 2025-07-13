@@ -163,4 +163,22 @@ class OrderController extends Controller
             ]);
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $order = Order::findOrFail($id);
+            
+            // Delete related order items first
+            $order->items()->delete();
+            
+            // Delete the order
+            $order->delete();
+            
+            return redirect()->route('orders.index')->with('success', 'Order berhasil dihapus!');
+            
+        } catch (\Exception $e) {
+            return redirect()->route('orders.index')->with('error', 'Gagal menghapus order: ' . $e->getMessage());
+        }
+    }
 } 

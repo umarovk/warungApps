@@ -160,7 +160,39 @@
             border: 1px solid #c3e6cb;
         }
 
-        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+            border: 1px solid #f5c6cb;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 
@@ -178,6 +210,12 @@
         @if (session('success'))
             <div class="success-message">
                 {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="error-message">
+                {{ session('error') }}
             </div>
         @endif
 
@@ -209,8 +247,17 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="order-status status-{{ $order->status }}">
-                            {{ $order->status_label }}
+                        <div class="order-actions">
+                            <div class="order-status status-{{ $order->status }}">
+                                {{ $order->status_label }}
+                            </div>
+                            <button
+                                onclick="deleteOrder({{ $order->id }}, '{{ $order->customer_name }}')"
+                                class="delete-btn"
+                                title="Hapus Order"
+                            >
+                                🗑️
+                            </button>
                         </div>
                     </div>
                 @endforeach
@@ -221,9 +268,36 @@
                 </div>
             @endif
         </div>
-
-        
     </div>
+
+    <script>
+        function deleteOrder(id, customerName) {
+            if (confirm(`Apakah Anda yakin ingin menghapus order untuk "${customerName}"?`)) {
+                // Create form for delete
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/orders/${id}`;
+
+                // Add CSRF token
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = '_token';
+                csrfToken.value = '{{ csrf_token() }}';
+                form.appendChild(csrfToken);
+
+                // Add method override
+                const methodField = document.createElement('input');
+                methodField.type = 'hidden';
+                methodField.name = '_method';
+                methodField.value = 'DELETE';
+                form.appendChild(methodField);
+
+                // Submit form
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
 </body>
 
 </html>
