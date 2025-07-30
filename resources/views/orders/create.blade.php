@@ -209,10 +209,60 @@
         }
 
         /* Mobile Layout - Single Column */
-        @media (max-width: 767px) {
+        @media (max-width: 499px) {
             .menu-grid {
                 grid-template-columns: 1fr;
                 gap: 12px;
+            }
+        }
+
+        /* Small Tablet Layout - Two Columns */
+        @media (min-width: 500px) and (max-width: 767px) {
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .container {
+                max-width: 600px;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .menu-item {
+                padding: 12px;
+            }
+
+            .menu-image {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+
+            .menu-name {
+                font-size: 15px;
+            }
+
+            .menu-price {
+                font-size: 13px;
+            }
+
+            .menu-description {
+                font-size: 11px;
+                margin-bottom: 8px;
+            }
+
+            .quantity-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 16px;
+            }
+
+            .quantity-input {
+                width: 45px;
+                font-size: 13px;
             }
         }
 
