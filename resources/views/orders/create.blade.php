@@ -12,7 +12,7 @@
         :root {
             --primary-bg: #f5f5f5;
             --primary-text: #222;
-            --header-bg: #000;
+            --header-bg: #b9b9b9;
             --header-text: #fff;
             --card-bg: #fff;
             --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -32,7 +32,7 @@
             --order-summary-bg: #fff;
             --order-summary-title: #333;
             --order-summary-label: #333;
-            --order-summary-amount: #ff6b6b;
+            --order-summary-amount: #373737;
             --order-summary-item: #333;
             --order-summary-qty: #666;
             --submit-btn-bg: linear-gradient(135deg, #ff6b6b, #ee5a24);
@@ -84,14 +84,25 @@
         .header {
             background: var(--header-bg);
             color: var(--header-text);
-            padding: 20px;
+            padding: 15px 20px;
             text-align: center;
             position: relative;
         }
 
+        .header h1 {
+            margin: 0 0 5px 0;
+            font-size: 24px;
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
         .theme-toggle {
             position: absolute;
-            top: 20px;
+            top: 15px;
             right: 20px;
             background: var(--card-bg);
             color: var(--primary-text);
@@ -140,7 +151,7 @@
         }
 
         .container {
-            max-width: 400px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             padding-bottom: 40px;
@@ -193,7 +204,93 @@
 
         .menu-grid {
             display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 15px;
+        }
+
+        /* Mobile Layout - Single Column */
+        @media (max-width: 767px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+
+        /* Tablet Layout */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .container {
+                max-width: 700px;
+            }
+
+            .form-card {
+                padding: 25px;
+            }
+
+            .menu-item {
+                padding: 12px;
+            }
+
+            .menu-image {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+
+            .menu-name {
+                font-size: 15px;
+            }
+
+            .menu-price {
+                font-size: 13px;
+            }
+
+            .menu-description {
+                font-size: 11px;
+                margin-bottom: 8px;
+            }
+
+            .quantity-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 16px;
+            }
+
+            .quantity-input {
+                width: 45px;
+                font-size: 13px;
+            }
+        }
+
+        /* Desktop Layout */
+        @media (min-width: 1024px) {
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 25px;
+            }
+
+            .container {
+                max-width: 1000px;
+            }
+
+            .form-card {
+                padding: 30px;
+            }
+        }
+
+        /* Large Desktop Layout */
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 1000px;
+            }
+
+            .menu-grid {
+                gap: 25px;
+            }
         }
 
         .menu-item {
@@ -316,6 +413,14 @@
             margin-right: auto;
         }
 
+        /* Responsive order summary for larger screens */
+        @media (min-width: 768px) {
+            .order-summary {
+                max-width: 500px;
+                padding: 30px;
+            }
+        }
+
         .summary-title {
             font-size: 18px;
             font-weight: 600;
@@ -379,6 +484,83 @@
             font-size: 20px;
             font-weight: 700;
             color: var(--order-summary-amount);
+        }
+
+        .payment-section {
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .payment-input {
+            width: 95%;
+            padding: 12px 15px;
+            background: var(--form-input-bg);
+            border: 2px solid var(--form-input-border);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            color: var(--primary-text);
+            margin-bottom: 10px;
+        }
+
+        .payment-input:focus {
+            outline: none;
+            border-color: var(--form-input-focus);
+        }
+
+        .change-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding: 8px 0;
+            border-top: 1px solid #eee;
+        }
+
+        .change-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--order-summary-label);
+        }
+
+        .change-amount {
+            font-size: 18px;
+            font-weight: 700;
+            color: #28a745;
+        }
+
+        .change-amount.negative {
+            color: #dc3545;
+        }
+
+        .quick-payment-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .quick-payment-btn {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(78, 205, 196, 0.3);
+        }
+
+        .quick-payment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.4);
+        }
+
+        .quick-payment-btn:active {
+            transform: translateY(0);
         }
 
         .submit-btn {
@@ -597,6 +779,73 @@
             </div>
         </div>
 
+        <div class="payment-section">
+            <div class="form-label">Jumlah Uang yang Dibayarkan:</div>
+
+            <div class="quick-payment-buttons">
+                {{-- <button
+                    type="button"
+                    class="quick-payment-btn"
+                    onclick="addPayment(10000)"
+                >
+                    💰 2K
+                </button>
+                <button
+                    type="button"
+                    class="quick-payment-btn"
+                    onclick="addPayment(20000)"
+                >
+                    💰 5K
+                </button>
+                <button
+                    type="button"
+                    class="quick-payment-btn"
+                    onclick="addPayment(10000)"
+                >
+                    💰 10K
+                </button> --}}
+                <button
+                    type="button"
+                    class="quick-payment-btn"
+                    onclick="addPayment(20000)"
+                >
+                    💰 20K
+                </button>
+                <button
+                    type="button"
+                    class="quick-payment-btn"
+                    onclick="addPayment(50000)"
+                >
+                    💰 50K
+                </button>
+                <button
+                    type="button"
+                    class="quick-payment-btn"
+                    onclick="addPayment(100000)"
+                >
+                    💰 100K
+                </button>
+            </div>
+
+            <input
+                type="number"
+                class="payment-input"
+                id="paymentAmount"
+                placeholder="Masukkan jumlah uang"
+                min="0"
+                oninput="calculateChange()"
+                onfocus="if(this.value == 0) this.value='';"
+            >
+
+            <div class="change-row">
+                <span class="change-label">Kembalian:</span>
+                <span
+                    class="change-amount"
+                    id="changeAmount"
+                >Rp 0</span>
+            </div>
+        </div>
+
         <button
             type="button"
             class="submit-btn"
@@ -703,6 +952,51 @@
             orderItemsContainer.innerHTML = itemsHtml;
             totalAmountElement.textContent = `Rp ${total.toLocaleString()}`;
             submitBtn.disabled = total === 0;
+
+            // Recalculate change when total changes
+            calculateChange();
+        }
+
+        function addPayment(amount) {
+            const paymentInput = document.getElementById('paymentAmount');
+            const currentPayment = parseInt(paymentInput.value) || 0;
+            const newPayment = currentPayment + amount;
+
+            paymentInput.value = newPayment;
+            calculateChange();
+
+            // Add visual feedback
+            const button = event.target;
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = '';
+            }, 150);
+        }
+
+        function calculateChange() {
+            const totalAmountElement = document.getElementById('totalAmount');
+            const paymentInput = document.getElementById('paymentAmount');
+            const changeAmountElement = document.getElementById('changeAmount');
+
+            // Get total from the global variable instead of parsing text
+            let total = 0;
+            for (const [menuId, item] of Object.entries(orderItems)) {
+                total += item.total;
+            }
+
+            const payment = parseInt(paymentInput.value) || 0;
+            const change = payment - total;
+
+            if (payment === 0) {
+                changeAmountElement.textContent = 'Rp 0';
+                changeAmountElement.className = 'change-amount';
+            } else if (change >= 0) {
+                changeAmountElement.textContent = `Rp ${change.toLocaleString()}`;
+                changeAmountElement.className = 'change-amount';
+            } else {
+                changeAmountElement.textContent = `Kurang Rp ${Math.abs(change).toLocaleString()}`;
+                changeAmountElement.className = 'change-amount negative';
+            }
         }
 
         function submitOrder() {
@@ -711,10 +1005,28 @@
                 return;
             }
 
+            // Check if payment is sufficient
+            const paymentInput = document.getElementById('paymentAmount');
+
+            let total = 0;
+            for (const [menuId, item] of Object.entries(orderItems)) {
+                total += item.total;
+            }
+
+            const payment = parseInt(paymentInput.value) || 0;
+
+            if (payment < total) {
+                alert('Jumlah pembayaran kurang! Silakan masukkan jumlah yang cukup.');
+                paymentInput.focus();
+                return;
+            }
+
             // Create form data
             const formData = new FormData();
             formData.append('items', JSON.stringify(orderItems));
-            formData.append('total', Object.values(orderItems).reduce((sum, item) => sum + item.total, 0));
+            formData.append('total', total);
+            formData.append('payment_amount', payment);
+            formData.append('change_amount', payment - total);
             formData.append('_token', '{{ csrf_token() }}');
 
             // Submit order

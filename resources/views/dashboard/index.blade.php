@@ -414,6 +414,24 @@
             color: #000000;
         }
 
+        .feature-card.clicking {
+            animation: pulse 0.3s ease;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(0.98);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
         body.dark-mode .logout-btn-bottom:hover {
             box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
         }
@@ -492,8 +510,10 @@
             </a>
 
             <a
-                href="{{ route('orders.index') }}"
+                href="javascript:void(0)"
                 class="feature-card"
+                id="historyButton"
+                onclick="handleHistoryClick()"
             >
                 <div class="feature-icon history-icon">
                     📋
@@ -569,6 +589,27 @@
                 localStorage.setItem('theme-mode', isDark ? 'dark' : 'light');
                 setTheme(isDark ? 'dark' : 'light');
             });
+
+            // History button click counter
+            let clickCount = 0;
+            const requiredClicks = 10;
+
+            function handleHistoryClick() {
+                clickCount++;
+
+                // Add visual feedback
+                const historyButton = document.getElementById('historyButton');
+                historyButton.classList.add('clicking');
+                setTimeout(() => {
+                    historyButton.classList.remove('clicking');
+                }, 300);
+
+                // Check if reached required clicks
+                if (clickCount >= requiredClicks) {
+                    // Navigate to orders index
+                    window.location.href = '{{ route('orders.index') }}';
+                }
+            }
         </script>
 </body>
 

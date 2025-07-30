@@ -38,9 +38,9 @@ class CreateAdminUser extends Command
         // Create admin user
         User::create([
             'name' => 'Admin Warung',
-            'username' => 'warung',
+            'username' => 'opal',
             'email' => 'admin@warung.com',
-            'password' => Hash::make('busaemah'),
+            'password' => Hash::make('umar'),
         ]);
 
         $this->info('Default admin user created successfully!');
