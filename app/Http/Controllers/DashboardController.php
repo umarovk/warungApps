@@ -248,4 +248,74 @@ class DashboardController extends Controller
         $process->run();
         return $process->isSuccessful();
     }
+
+    public function report()
+    {
+        // Total pendapatan harian
+        $totalPendapatanHarian = Order::whereDate('created_at', today())->sum('total');
+        
+        // Total order harian
+        $totalOrderHarian = Order::whereDate('created_at', today())->count();
+        
+        // Makanan terlaris (top 5)
+        $makananTerlaris = OrderItem::select(
+                'menus.id',
+                'menus.nama',
+                'menus.harga',
+                'menus.kategori',
+                DB::raw('SUM(order_items.quantity) as jumlah_terjual'),
+                DB::raw('SUM(order_items.subtotal) as total_pendapatan')
+            )
+            ->join('menus', 'order_items.menu_id', '=', 'menus.id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('menus.kategori', Menu::KATEGORI_MAKANAN)
+            ->whereDate('orders.created_at', today())
+            ->groupBy('menus.id', 'menus.nama', 'menus.harga', 'menus.kategori')
+            ->orderBy('jumlah_terjual', 'desc')
+            ->limit(5)
+            ->get();
+        
+        // Minuman terlaris (top 5)
+        $minumanTerlaris = OrderItem::select(
+                'menus.id',
+                'menus.nama',
+                'menus.harga',
+                'menus.kategori',
+                DB::raw('SUM(order_items.quantity) as jumlah_terjual'),
+                DB::raw('SUM(order_items.subtotal) as total_pendapatan')
+            )
+            ->join('menus', 'order_items.menu_id', '=', 'menus.id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('menus.kategori', Menu::KATEGORI_MINUMAN)
+            ->whereDate('orders.created_at', today())
+            ->groupBy('menus.id', 'menus.nama', 'menus.harga', 'menus.kategori')
+            ->orderBy('jumlah_terjual', 'desc')
+            ->limit(5)
+            ->get();
+        
+        // Total pendapatan makanan
+        $pendapatanMakanan = OrderItem::select(DB::raw('SUM(order_items.subtotal) as total'))
+            ->join('menus', 'order_items.menu_id', '=', 'menus.id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('menus.kategori', Menu::KATEGORI_MAKANAN)
+            ->whereDate('orders.created_at', today())
+            ->first()->total ?? 0;
+        
+        // Total pendapatan minuman
+        $pendapatanMinuman = OrderItem::select(DB::raw('SUM(order_items.subtotal) as total'))
+            ->join('menus', 'order_items.menu_id', '=', 'menus.id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('menus.kategori', Menu::KATEGORI_MINUMAN)
+            ->whereDate('orders.created_at', today())
+            ->first()->total ?? 0;
+        
+        return view('admin.report', compact(
+            'totalPendapatanHarian',
+            'totalOrderHarian',
+            'makananTerlaris',
+            'minumanTerlaris',
+            'pendapatanMakanan',
+            'pendapatanMinuman'
+        ));
+    }
 } 

@@ -9,31 +9,104 @@
     >
     <title>Tambah Order - Warung Dashboard</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-bg: #f5f5f5;
+            --primary-text: #222;
+            --header-bg: #000;
+            --header-text: #fff;
+            --card-bg: #fff;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --form-label: #333;
+            --form-input-bg: #fff;
+            --form-input-border: #e1e5e9;
+            --form-input-focus: #ff6b6b;
+            --menu-bg: #f8f9fa;
+            --menu-border: transparent;
+            --menu-hover-bg: #fff;
+            --menu-hover-border: #ff6b6b;
+            --menu-selected-bg: #fff5f5;
+            --menu-selected-border: #ff6b6b;
+            --menu-name: #333;
+            --menu-price: #ff6b6b;
+            --menu-desc: #666;
+            --order-summary-bg: #fff;
+            --order-summary-title: #333;
+            --order-summary-label: #333;
+            --order-summary-amount: #ff6b6b;
+            --order-summary-item: #333;
+            --order-summary-qty: #666;
+            --submit-btn-bg: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            --submit-btn-text: #fff;
+            --success-bg: #4CAF50;
+            --success-text: #fff;
+        }
+
+        body.dark-mode {
+            --primary-bg: #181a20;
+            --primary-text: #f4f4f4;
+            --header-bg: #23262f;
+            --header-text: #fff;
+            --card-bg: #23262f;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+            --form-label: #f4f4f4;
+            --form-input-bg: #23262f;
+            --form-input-border: #444;
+            --form-input-focus: #764ba2;
+            --menu-bg: #23262f;
+            --menu-border: #23262f;
+            --menu-hover-bg: #23262f;
+            --menu-hover-border: #764ba2;
+            --menu-selected-bg: #23262f;
+            --menu-selected-border: #764ba2;
+            --menu-name: #f4f4f4;
+            --menu-price: #ffb86b;
+            --menu-desc: #bbb;
+            --order-summary-bg: #23262f;
+            --order-summary-title: #fff;
+            --order-summary-label: #fff;
+            --order-summary-amount: #ffb86b;
+            --order-summary-item: #fff;
+            --order-summary-qty: #bbb;
+            --submit-btn-bg: linear-gradient(135deg, #764ba2, #667eea);
+            --submit-btn-text: #fff;
+            --success-bg: #4CAF50;
+            --success-text: #fff;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
+            background: var(--primary-bg);
+            color: var(--primary-text);
             min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
         }
 
         .header {
-            /* background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); */
-            background: black;
-            color: white;
+            background: var(--header-bg);
+            color: var(--header-text);
             padding: 20px;
             text-align: center;
             position: relative;
         }
 
-        .header h1 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 5px;
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            color: var(--primary-text);
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            z-index: 2;
+        }
+
+        .theme-toggle:hover {
+            background: #764ba2;
+            color: #fff;
         }
 
         .back-btn {
@@ -57,15 +130,14 @@
             min-height: 40px;
             transition: all 0.2s ease;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
         }
 
         .back-btn:hover {
-            background: white;
+            background: #fff;
             transform: translateY(-50%) scale(1.05);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-
-
 
         .container {
             max-width: 400px;
@@ -75,14 +147,10 @@
         }
 
         .form-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .form-group {
+            box-shadow: var(--card-shadow);
             margin-bottom: 20px;
         }
 
@@ -90,22 +158,24 @@
             display: block;
             font-size: 14px;
             font-weight: 600;
-            color: #333;
+            color: var(--form-label);
             margin-bottom: 8px;
         }
 
         .form-input {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #e1e5e9;
+            background: var(--form-input-bg);
+            border: 2px solid var(--form-input-border);
             border-radius: 10px;
             font-size: 16px;
             transition: border-color 0.3s;
+            color: var(--primary-text);
         }
 
         .form-input:focus {
             outline: none;
-            border-color: #ff6b6b;
+            border-color: var(--form-input-focus);
         }
 
         .menu-section {
@@ -115,7 +185,7 @@
         .category-title {
             font-size: 18px;
             font-weight: 600;
-            color: #333;
+            color: var(--menu-name);
             margin-bottom: 15px;
             padding-bottom: 8px;
             border-bottom: 2px solid #ff6b6b;
@@ -127,23 +197,23 @@
         }
 
         .menu-item {
-            background: #f8f9fa;
+            background: var(--menu-bg);
             border-radius: 12px;
             padding: 15px;
-            border: 2px solid transparent;
+            border: 2px solid var(--menu-border);
             transition: all 0.3s ease;
             cursor: pointer;
         }
 
         .menu-item:hover {
-            border-color: #ff6b6b;
-            background: white;
+            border-color: var(--menu-hover-border);
+            background: var(--menu-hover-bg);
             box-shadow: 0 4px 15px rgba(255, 107, 107, 0.1);
         }
 
         .menu-item.selected {
-            border-color: #ff6b6b;
-            background: #fff5f5;
+            border-color: var(--menu-selected-border);
+            background: var(--menu-selected-bg);
         }
 
         .menu-header {
@@ -174,19 +244,19 @@
         .menu-name {
             font-size: 16px;
             font-weight: 600;
-            color: #333;
+            color: var(--menu-name);
             margin-bottom: 3px;
         }
 
         .menu-price {
             font-size: 14px;
             font-weight: 700;
-            color: #ff6b6b;
+            color: var(--menu-price);
         }
 
         .menu-description {
             font-size: 12px;
-            color: #666;
+            color: var(--menu-desc);
             margin-bottom: 10px;
             line-height: 1.4;
         }
@@ -231,13 +301,15 @@
             border-radius: 5px;
             padding: 5px;
             font-size: 14px;
+            background: var(--form-input-bg);
+            color: var(--primary-text);
         }
 
         .order-summary {
-            background: white;
+            background: var(--order-summary-bg);
             border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--card-shadow);
             margin-top: 20px;
             max-width: 400px;
             margin-left: auto;
@@ -247,7 +319,7 @@
         .summary-title {
             font-size: 18px;
             font-weight: 600;
-            color: #333;
+            color: var(--order-summary-title);
             margin-bottom: 15px;
             text-align: center;
         }
@@ -270,18 +342,18 @@
 
         .item-name {
             font-size: 14px;
-            color: #333;
+            color: var(--order-summary-item);
         }
 
         .item-quantity {
             font-size: 12px;
-            color: #666;
+            color: var(--order-summary-qty);
         }
 
         .item-total {
             font-size: 14px;
             font-weight: 600;
-            color: #ff6b6b;
+            color: var(--order-summary-amount);
         }
 
         .total-section {
@@ -300,18 +372,18 @@
         .total-label {
             font-size: 16px;
             font-weight: 600;
-            color: #333;
+            color: var(--order-summary-label);
         }
 
         .total-amount {
             font-size: 20px;
             font-weight: 700;
-            color: #ff6b6b;
+            color: var(--order-summary-amount);
         }
 
         .submit-btn {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            color: white;
+            background: var(--submit-btn-bg);
+            color: var(--submit-btn-text);
             border: none;
             padding: 15px 25px;
             border-radius: 25px;
@@ -363,8 +435,8 @@
         }
 
         .success-icon {
-            background: #4CAF50;
-            color: white;
+            background: var(--success-bg);
+            color: var(--success-text);
             width: 80px;
             height: 80px;
             border-radius: 50%;
@@ -413,7 +485,10 @@
             href="{{ route('dashboard') }}"
             class="back-btn"
         >←</a>
-
+        <button
+            class="theme-toggle"
+            id="theme-toggle"
+        >🌙 Dark Mode</button>
         <h1>Tambah Order</h1>
         <p>Pilih menu untuk order baru</p>
     </div>
@@ -482,6 +557,7 @@
                                     min="0"
                                     max="99"
                                     onchange="updateQuantity({{ $menu->id }})"
+                                    onfocus="if(this.value == 0) this.value='';"
                                 >
                                 <button
                                     type="button"
@@ -655,7 +731,7 @@
 
                         // Redirect to dashboard after 0.5 seconds
                         setTimeout(() => {
-                            window.location.href = '{{ route('dashboard') }}';
+                            window.location.href = '{{ route('orders.create') }}';
                         }, 500);
                     } else {
                         alert('Gagal membuat order: ' + data.message);
@@ -666,6 +742,27 @@
                     alert('Terjadi kesalahan saat membuat order');
                 });
         }
+
+        // Theme toggle logic
+        const toggleBtn = document.getElementById('theme-toggle');
+
+        function setTheme(mode) {
+            if (mode === 'dark') {
+                document.body.classList.add('dark-mode');
+                toggleBtn.textContent = '☀️ Light Mode';
+            } else {
+                document.body.classList.remove('dark-mode');
+                toggleBtn.textContent = '🌙 Dark Mode';
+            }
+        }
+        // Load from localStorage
+        const savedTheme = localStorage.getItem('theme-mode');
+        setTheme(savedTheme === 'dark' ? 'dark' : 'light');
+        toggleBtn.addEventListener('click', function() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme-mode', isDark ? 'dark' : 'light');
+            setTheme(isDark ? 'dark' : 'light');
+        });
     </script>
 </body>
 

@@ -9,30 +9,86 @@
     >
     <title>Kelola Menu - Warung Dashboard</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-bg: #f5f5f5;
+            --primary-text: #222;
+            --header-bg: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            --header-text: #fff;
+            --card-bg: #fff;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --menu-name: #333;
+            --menu-desc: #666;
+            --menu-price: #4ecdc4;
+            --menu-image-bg: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --menu-image-color: #fff;
+            --status-active-bg: #d4edda;
+            --status-active-text: #155724;
+            --status-inactive-bg: #f8d7da;
+            --status-inactive-text: #721c24;
+            --success-bg: #d4edda;
+            --success-text: #155724;
+            --empty-state: #666;
+            --add-btn-bg: linear-gradient(135deg, #4ecdc4, #44a08d);
+            --add-btn-text: #fff;
+        }
+
+        body.dark-mode {
+            --primary-bg: #181a20;
+            --primary-text: #f4f4f4;
+            --header-bg: #23262f;
+            --header-text: #fff;
+            --card-bg: #23262f;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+            --menu-name: #f4f4f4;
+            --menu-desc: #bbb;
+            --menu-price: #4ecdc4;
+            --menu-image-bg: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            --menu-image-color: #fff;
+            --status-active-bg: #2e7d32;
+            --status-active-text: #d4edda;
+            --status-inactive-bg: #721c24;
+            --status-inactive-text: #f8d7da;
+            --success-bg: #23262f;
+            --success-text: #4ecdc4;
+            --empty-state: #bbb;
+            --add-btn-bg: linear-gradient(135deg, #764ba2, #667eea);
+            --add-btn-text: #fff;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
+            background: var(--primary-bg);
+            color: var(--primary-text);
             min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
         }
 
         .header {
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-            color: white;
+            background: var(--header-bg);
+            color: var(--header-text);
             padding: 20px;
             text-align: center;
             position: relative;
         }
 
-        .header h1 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 5px;
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            color: var(--primary-text);
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            z-index: 2;
+        }
+
+        .theme-toggle:hover {
+            background: #764ba2;
+            color: #fff;
         }
 
         .back-btn {
@@ -56,10 +112,11 @@
             min-height: 40px;
             transition: all 0.2s ease;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
         }
 
         .back-btn:hover {
-            background: white;
+            background: #fff;
             transform: translateY(-50%) scale(1.05);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
@@ -76,8 +133,8 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, #4ecdc4, #44a08d);
-            color: white;
+            background: var(--add-btn-bg);
+            color: var(--add-btn-text);
             border: none;
             padding: 18px 35px;
             border-radius: 50px;
@@ -108,10 +165,10 @@
         }
 
         .menu-item {
-            background: white;
+            background: var(--card-bg);
             border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--card-shadow);
             display: flex;
             align-items: center;
             gap: 20px;
@@ -128,12 +185,12 @@
             width: 100px;
             height: 100px;
             border-radius: 15px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: var(--menu-image-bg);
+            color: var(--menu-image-color);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 32px;
-            color: white;
             flex-shrink: 0;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -152,13 +209,13 @@
         .menu-info h3 {
             font-size: 18px;
             font-weight: 600;
-            color: #333;
+            color: var(--menu-name);
             margin-bottom: 8px;
         }
 
         .menu-info p {
             font-size: 15px;
-            color: #666;
+            color: var(--menu-desc);
             margin-bottom: 8px;
             line-height: 1.4;
         }
@@ -166,7 +223,7 @@
         .menu-price {
             font-size: 18px;
             font-weight: 700;
-            color: #4ecdc4;
+            color: var(--menu-price);
             margin-bottom: 5px;
         }
 
@@ -179,13 +236,13 @@
         }
 
         .status-active {
-            background: #d4edda;
-            color: #155724;
+            background: var(--status-active-bg);
+            color: var(--status-active-text);
         }
 
         .status-inactive {
-            background: #f8d7da;
-            color: #721c24;
+            background: var(--status-inactive-bg);
+            color: var(--status-inactive-text);
         }
 
         .menu-actions {
@@ -222,8 +279,8 @@
         }
 
         .success-message {
-            background: #d4edda;
-            color: #155724;
+            background: var(--success-bg);
+            color: var(--success-text);
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 20px;
@@ -235,7 +292,7 @@
         .empty-state {
             text-align: center;
             padding: 40px 20px;
-            color: #666;
+            color: var(--empty-state);
         }
 
         .empty-state h3 {
@@ -281,6 +338,10 @@
             href="{{ route('dashboard') }}"
             class="back-btn"
         >←</a>
+        <button
+            class="theme-toggle"
+            id="theme-toggle"
+        >🌙 Dark Mode</button>
         <h1>Kelola Menu</h1>
         <p>Daftar menu warung</p>
     </div>
@@ -383,6 +444,27 @@
                 form.submit();
             }
         }
+
+        // Theme toggle logic
+        const toggleBtn = document.getElementById('theme-toggle');
+
+        function setTheme(mode) {
+            if (mode === 'dark') {
+                document.body.classList.add('dark-mode');
+                toggleBtn.textContent = '☀️ Light Mode';
+            } else {
+                document.body.classList.remove('dark-mode');
+                toggleBtn.textContent = '🌙 Dark Mode';
+            }
+        }
+        // Load from localStorage
+        const savedTheme = localStorage.getItem('theme-mode');
+        setTheme(savedTheme === 'dark' ? 'dark' : 'light');
+        toggleBtn.addEventListener('click', function() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme-mode', isDark ? 'dark' : 'light');
+            setTheme(isDark ? 'dark' : 'light');
+        });
     </script>
 </body>
 
