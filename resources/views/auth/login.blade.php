@@ -236,13 +236,8 @@
             </button>
         </form>
 
-        <div class="divider">atau</div>
 
-        <div class="demo-info">
-            <strong>Clue Account:</strong><br>
-            Username: w...<br>
-            Password: b...
-        </div>
+
     </div>
 </body>
 

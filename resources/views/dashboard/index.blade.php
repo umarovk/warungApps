@@ -9,18 +9,37 @@
     >
     <title>Warung Dashboard</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-bg: #f4f4f4;
+            --primary-text: #222;
+            --card-bg: #fff;
+            --card-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            --accent: #667eea;
+            --header-text: #222;
+            --stat-bg: rgba(255, 255, 255, 0.9);
+            --stat-title: #222;
+            --stat-label: #666;
+        }
+
+        body.dark-mode {
+            --primary-bg: #181a20;
+            --primary-text: #f4f4f4;
+            --card-bg: #23262f;
+            --card-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            --accent: #764ba2;
+            --header-text: #fff;
+            --stat-bg: rgba(36, 37, 42, 0.95);
+            --stat-title: #fff;
+            --stat-label: #bbb;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background: black;
+            background: var(--primary-bg);
+            color: var(--primary-text);
             min-height: 100vh;
             padding: 20px;
+            transition: background 0.3s, color 0.3s;
         }
 
         .container {
@@ -31,45 +50,28 @@
         .header {
             text-align: center;
             margin-bottom: 30px;
-            color: white;
+            color: var(--header-text);
             position: relative;
         }
 
-        .logout-container {
-            display: flex;
-            justify-content: center;
-            margin: 20px auto 0;
-        }
-
-        .logout-btn-bottom {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--card-bg);
+            color: var(--primary-text);
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 13px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: inline-block;
+            transition: background 0.2s, color 0.2s;
+            margin: 10px;
         }
 
-        .logout-btn-bottom:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .header p {
-            font-size: 16px;
-            opacity: 0.9;
+        .theme-toggle:hover {
+            background: var(--accent);
+            color: #fff;
         }
 
         .dashboard-grid {
@@ -80,14 +82,14 @@
         }
 
         .feature-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 20px;
             padding: 25px 20px;
             text-align: center;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--card-shadow);
             transition: all 0.3s ease;
             text-decoration: none;
-            color: #333;
+            color: var(--primary-text);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -98,10 +100,6 @@
         .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
-        }
-
-        .feature-card:active {
-            transform: translateY(-2px);
         }
 
         .feature-icon {
@@ -135,6 +133,26 @@
             color: #333;
         }
 
+        .report-icon {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .export-icon {
+            background: linear-gradient(135deg, #ffffff, #d2e46c);
+            color: white;
+        }
+
+        .history-icon {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .database-icon {
+            background: linear-gradient(135deg, #ffffff, #747474);
+            color: white;
+        }
+
         .feature-title {
             font-size: 16px;
             font-weight: 600;
@@ -143,7 +161,7 @@
 
         .feature-desc {
             font-size: 12px;
-            color: #666;
+            color: var(--stat-label);
             line-height: 1.4;
         }
 
@@ -156,7 +174,7 @@
         }
 
         .stats-title {
-            color: white;
+            color: var(--stat-title);
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 15px;
@@ -170,7 +188,7 @@
         }
 
         .stat-item {
-            background: rgba(255, 255, 255, 0.9);
+            background: var(--stat-bg);
             border-radius: 15px;
             padding: 15px;
             text-align: center;
@@ -179,21 +197,19 @@
         .stat-number {
             font-size: 24px;
             font-weight: 700;
-            color: #333;
+            color: var(--primary-text);
             margin-bottom: 5px;
         }
 
         .stat-label {
             font-size: 12px;
-            color: #666;
+            color: var(--stat-label);
             font-weight: 500;
         }
 
         .top-menu-section {
             margin-top: 20px;
         }
-
-
 
         .top-menu-card {
             background: rgba(255, 255, 255, 0.1);
@@ -204,7 +220,7 @@
         }
 
         .top-menu-title {
-            color: white;
+            color: var(--stat-title);
             font-size: 16px;
             font-weight: 600;
             margin-bottom: 15px;
@@ -222,7 +238,7 @@
         }
 
         .top-menu-item {
-            background: rgba(255, 255, 255, 0.9);
+            background: var(--stat-bg);
             border-radius: 12px;
             padding: 12px;
             display: flex;
@@ -260,7 +276,7 @@
         .menu-name {
             font-size: 14px;
             font-weight: 600;
-            color: #333;
+            color: var(--primary-text);
             margin-bottom: 4px;
             white-space: nowrap;
             overflow: hidden;
@@ -269,7 +285,7 @@
 
         .menu-stats {
             font-size: 11px;
-            color: #666;
+            color: var(--stat-label);
         }
 
         .no-data {
@@ -293,8 +309,6 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
-
-
         }
 
         .button-container {
@@ -307,7 +321,7 @@
         .export-btn,
         .backup-btn {
             background: rgba(255, 255, 255, 0.2);
-            color: white;
+            color: var(--primary-text);
             border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 10px 20px;
             border-radius: 8px;
@@ -320,8 +334,9 @@
 
         .export-btn:hover,
         .backup-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
         }
 
         @media (max-width: 400px) {
@@ -336,6 +351,90 @@
                 max-width: 200px;
             }
         }
+
+        /* ===== LOGOUT BUTTON STYLES ===== */
+        .logout-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .logout-btn-bottom {
+            background: linear-gradient(135deg, #f3ff6b, #ccda30);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            /* box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3); */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logout-btn-bottom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .logout-btn-bottom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            color: white;
+        }
+
+        .logout-btn-bottom:hover::before {
+            left: 100%;
+        }
+
+        .logout-btn-bottom:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Dark mode adjustments for logout button */
+        body.dark-mode .logout-btn-bottom {
+            background: linear-gradient(135deg, #fda846, #daff37);
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+        }
+
+        .logout-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .feature-card.clicking {
+            animation: pulse 0.3s ease;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(0.98);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        body.dark-mode .logout-btn-bottom:hover {
+            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
+        }
     </style>
 </head>
 
@@ -344,8 +443,12 @@
         <div class="header">
             <h1>Warung Bu Saemah</h1>
             <p>Warung Bakso Nomor 1 di Banjarnegara</p>
-        </div>
 
+        </div>
+        <button
+            class="theme-toggle"
+            id="theme-toggle"
+        >🌙 Dark Mode</button>
         <div class="dashboard-grid">
             <a
                 href="{{ route('orders.create') }}"
@@ -393,122 +496,121 @@
             </a> --}}
         </div>
 
-        <div class="stats-section">
-            <div class="stats-title">Statistik Hari Ini</div>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">{{ $orderStats['today_orders'] }}</div>
-                    <div class="stat-label">Pesanan Hari Ini</div>
+
+        <div class="dashboard-grid">
+            <a
+                href="{{ route('admin.report') }}"
+                class="feature-card"
+            >
+                <div class="feature-icon report-icon">
+                    📊
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">Rp {{ number_format($orderStats['today_revenue'] / 1000, 0) }}K</div>
-                    <div class="stat-label">Pendapatan Hari Ini</div>
+                <div class="feature-title">Laporan</div>
+                <div class="feature-desc">Lihat laporan penjualan</div>
+            </a>
+
+            <a
+                href="javascript:void(0)"
+                class="feature-card"
+                id="historyButton"
+                onclick="handleHistoryClick()"
+            >
+                <div class="feature-icon history-icon">
+                    📋
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">{{ $menuCount }}</div>
-                    <div class="stat-label">Menu Aktif</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">{{ $userCount }}</div>
-                    <div class="stat-label">User Aktif</div>
-                </div>
-            </div>
+                <div class="feature-title">Riwayat Order</div>
+                <div class="feature-desc">Lihat semua pesanan</div>
+            </a>
         </div>
 
-        <!-- Top Food Items -->
-        <div class="top-menu-section">
-            <div class="top-menu-card">
-                <div class="top-menu-title">
-                    <span>🍽️ Makanan Terlaris</span>
+
+        <div class="dashboard-grid">
+            <a
+                href="{{ route('orders.export.csv') }}"
+                class="feature-card"
+            >
+                <div class="feature-icon export-icon">
+                    📊
                 </div>
-                <div class="top-menu-list">
-                    @if ($topFoodItems->isEmpty())
-                        <div class="no-data">Belum ada data</div>
-                    @else
-                        @foreach ($topFoodItems as $index => $item)
-                            <div class="top-menu-item">
-                                <div class="menu-rank rank-{{ $index + 1 }}">
-                                    {{ $index + 1 }}
-                                </div>
-                                <div class="menu-info">
-                                    <div class="menu-name">{{ $item->nama }}</div>
-                                    <div class="menu-stats">
-                                        Terjual: {{ $item->total_sold }} | Rp
-                                        {{ number_format($item->total_revenue, 0, ',', '.') }}
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
+                <div class="feature-title">Export Data</div>
+                <div class="feature-desc">Lihat laporan penjualan</div>
+            </a>
+
+            <a
+                href="{{ route('database.backup') }}"
+                class="feature-card"
+            >
+                <div class="feature-icon database-icon">
+                    💾
                 </div>
-            </div>
+                <div class="feature-title">Backup Database</div>
+                <div class="feature-desc">Lihat semua pesanan</div>
+            </a>
         </div>
 
-        <!-- Top Drink Items -->
-        <div class="top-menu-section">
-            <div class="top-menu-card">
-                <div class="top-menu-title">
-                    <span>🥤 Minuman Terlaris</span>
-                </div>
-                <div class="top-menu-list">
-                    @if ($topDrinkItems->isEmpty())
-                        <div class="no-data">Belum ada data</div>
-                    @else
-                        @foreach ($topDrinkItems as $index => $item)
-                            <div class="top-menu-item">
-                                <div class="menu-rank rank-{{ $index + 1 }}">
-                                    {{ $index + 1 }}
-                                </div>
-                                <div class="menu-info">
-                                    <div class="menu-name">{{ $item->nama }}</div>
-                                    <div class="menu-stats">
-                                        Terjual: {{ $item->total_sold }} | Rp
-                                        {{ number_format($item->total_revenue, 0, ',', '.') }}
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
-            </div>
+
+        <div class="logout-container">
+            <a
+                href="{{ route('logout') }}"
+                class="logout-btn-bottom"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+            >
+                <span class="logout-text">Keluar dari Sistem</span>
+            </a>
         </div>
 
-    </div>
-
-    <div class="button-container">
-        <a
-            href="{{ route('orders.export.csv') }}"
-            class="export-btn"
+        <form
+            id="logout-form"
+            action="{{ route('logout') }}"
+            method="POST"
+            style="display: none;"
         >
-            📊 Export ke CSV
-        </a>
-        <a
-            href="{{ route('database.backup') }}"
-            class="backup-btn"
-        >
-            💾 Backup Database
-        </a>
-    </div>
+            @csrf
+        </form>
 
-    <div class="logout-container">
-        <a
-            href="{{ route('logout') }}"
-            class="logout-btn-bottom"
-            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-        >
-            🚪 Logout
-        </a>
-    </div>
+        <script>
+            // Theme toggle logic
+            const toggleBtn = document.getElementById('theme-toggle');
 
-    <form
-        id="logout-form"
-        action="{{ route('logout') }}"
-        method="POST"
-        style="display: none;"
-    >
-        @csrf
-    </form>
+            function setTheme(mode) {
+                if (mode === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    toggleBtn.textContent = '☀️ Light Mode';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    toggleBtn.textContent = '🌙 Dark Mode';
+                }
+            }
+            // Load from localStorage
+            const savedTheme = localStorage.getItem('theme-mode');
+            setTheme(savedTheme === 'dark' ? 'dark' : 'light');
+            toggleBtn.addEventListener('click', function() {
+                const isDark = document.body.classList.toggle('dark-mode');
+                localStorage.setItem('theme-mode', isDark ? 'dark' : 'light');
+                setTheme(isDark ? 'dark' : 'light');
+            });
 
+            // History button click counter
+            let clickCount = 0;
+            const requiredClicks = 10;
+
+            function handleHistoryClick() {
+                clickCount++;
+
+                // Add visual feedback
+                const historyButton = document.getElementById('historyButton');
+                historyButton.classList.add('clicking');
+                setTimeout(() => {
+                    historyButton.classList.remove('clicking');
+                }, 300);
+
+                // Check if reached required clicks
+                if (clickCount >= requiredClicks) {
+                    // Navigate to orders index
+                    window.location.href = '{{ route('orders.index') }}';
+                }
+            }
+        </script>
 </body>
 
 </html>
